@@ -8,14 +8,12 @@ using System.Threading.Tasks;
 
 namespace Data.Entities
 {
-    [Table("DeviceHealthStatus")]
+    [Table("DeviceHealth")]
     public class DeviceHealth
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int Status { get; set; }
-        
-
+        public string Status { get; set; }  
     }
 }

@@ -1,6 +1,12 @@
+using Data.Context;
+using Data.Helper;
+using Data.Repositories;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace Eppendorf_CRUD
 {
@@ -16,6 +22,11 @@ namespace Eppendorf_CRUD
             ConfigureServices(ref builder);
 
             var app = builder.Build();
+
+            using (var client = new EDBContext())
+            {
+                client.Database.EnsureCreated();
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -41,6 +52,14 @@ namespace Eppendorf_CRUD
         private static void ConfigureServices(ref WebApplicationBuilder builder)
         {
             builder.Services.AddRazorPages();
+            builder.Services.AddEntityFrameworkSqlite().AddDbContext<EDBContext>();
+            builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
+            builder.Services.AddScoped<IDeviceHealthRepository, DeviceHealthRepository>();
+            builder.Services.AddScoped<IDeviceTypeRepository, DeviceTypeRepository>();
+            builder.Services.AddScoped<DataHelper>();
+
         }
+
+        
     }
 }

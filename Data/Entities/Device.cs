@@ -18,8 +18,8 @@ namespace Data.Entities
         public int TypeId { get; set; }
         [ForeignKey("TypeId")]
         public virtual DeviceType Type { get; set; }        
-        public int HelthId { get; set; }
-        [ForeignKey("HelthId")]
+        public int HealthId { get; set; }
+        [ForeignKey("HealthId")]       
         public virtual DeviceHealth Health { get; set; }       
         public DateTime LastUsed { get; set; }
         public decimal Price { get; set; }

@@ -1,0 +1,60 @@
+﻿@page
+@model Eppendorf_CRUD_Frontend.Pages.DevicePages.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Device</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Device.Id" />
+            <div class="form-group">
+                <label asp-for="Device.Location" class="control-label"></label>
+                <input asp-for="Device.Location" class="form-control" />
+                <span asp-validation-for="Device.Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Device.TypeId" class="control-label"></label>
+                <select asp-for="Device.TypeId" class="form-control" asp-items="ViewBag.TypeId"></select>
+                <span asp-validation-for="Device.TypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Device.HealthId" class="control-label"></label>
+                <select asp-for="Device.HealthId" class="form-control" asp-items="ViewBag.HealthId"></select>
+                <span asp-validation-for="Device.HealthId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Device.LastUsed" class="control-label"></label>
+                <input asp-for="Device.LastUsed" class="form-control" />
+                <span asp-validation-for="Device.LastUsed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Device.Price" class="control-label"></label>
+                <input asp-for="Device.Price" class="form-control" />
+                <span asp-validation-for="Device.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Device.ColorHexValue" class="control-label"></label>
+                <input asp-for="Device.ColorHexValue" class="form-control" />
+                <span asp-validation-for="Device.ColorHexValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

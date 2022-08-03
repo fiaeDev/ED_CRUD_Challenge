@@ -6,10 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.EDBContext
+namespace Data.Context
 {
     public class EDBContext : DbContext
     {
+        public EDBContext()
+        {
+        }
 
         public EDBContext(DbContextOptions<EDBContext> options) : base(options)
         {
@@ -18,7 +21,8 @@ namespace Data.EDBContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=ED.db");
+            optionsBuilder.UseSqlite("Filename=../Data/DB/EDB.db");
+            //optionsBuilder.UseSqlite() "Filename=EDB.db");
         }
 
         public DbSet<Device> Devices { get; set; }
@@ -26,13 +30,17 @@ namespace Data.EDBContext
         public DbSet<DeviceHealth> DeviceHealths { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {            
+        {
+            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(EDBContext).Assembly);
+            
+           
             modelBuilder.Entity<Device>(entity =>
             {
-                entity.Property(p => p.Type)
-                    .IsRequired();
-                entity.Property(p => p.Health)
-                    .IsRequired();             
+                //entity.HasKey(s => new { s.TypeId, s.HealthId });
+                //entity.Property(p => p.Type)
+                //    .IsRequired();
+                //entity.Property(p => p.Health)
+                //    .IsRequired();             
             });
 
             modelBuilder.Entity<DeviceType>();

@@ -4,7 +4,33 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="text-center d-flex flex-column">
+        <label>Devices Amount:</label>
+        <label>@Model.DeviceCount</label>
+    </div>
+    <div class="m-2">
+        <a asp-page="/DevicePages/Index">Navigate to Devices</a>
+    </div>
+    <div class="w-100 mt-5">
+        <label class="mb-2">Initial Data File Upload: data.json</label>
+
+        <div class="d-flex flex-row justify-content-between ">
+            <form method="post" enctype="multipart/form-data" asp-page-handler="Upload" >
+                <div class="form-group">
+                    <label asp-for="@Model.DataFile">Files</label>
+                    <input asp-for="@Model.DataFile" type="file" />
+               
+                     <input type="submit" class="btn btn-primary ms-auto" value="upload"/>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+<style>
+    .flex-fill {
+        flex: 0 1 auto !important;
+        width: 120px;
+    }
+</style>
