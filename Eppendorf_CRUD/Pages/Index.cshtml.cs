@@ -20,25 +20,21 @@ namespace Eppendorf_CRUD.Pages
         private readonly IDeviceRepository _deviceRepo;
 
         public List<Device> Devices { get; set; }
-        public List<DeviceHealth> HealthStates { get; set; }
-        public List<DeviceType> DeviceTypes { get; set; }
+       
 
         public IFormFile DataFile { get; set; }
 
         public int DeviceCount { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger,DataHelper dataHelper, IDeviceRepository deviceRepo)
+        public IndexModel(ILogger<IndexModel> logger, IDeviceRepository deviceRepo)
         {
-            _logger = logger;
-            _dataHelper = dataHelper;
+            _logger = logger;            
             _deviceRepo = deviceRepo;
         }
 
         public async Task OnGet()
         {
-            Devices = await _deviceRepo.GetAllDevicesAsync();
-            HealthStates = await _dataHelper.GetDeviceHealthsAsync();
-            DeviceTypes = await _dataHelper.GetDeviceTypesAsync();
+            Devices = await _deviceRepo.GetAllDevicesAsync();           
             DeviceCount = Devices.Count;
         }
 
@@ -56,6 +52,10 @@ namespace Eppendorf_CRUD.Pages
                     var dataJson = sr.ReadToEnd();
                     var deviceData = JsonConvert.DeserializeObject<List<DeviceJson>>(dataJson);
 
+                    if(deviceData == null)
+                    {
+                        return Page();
+                    }
                     await _dataHelper.PropagateDeviceTypesAsync(deviceData);
                     await _dataHelper.PropagateDeviceHealthStatesAsync(deviceData);
                     await _dataHelper.PropagateDevices(deviceData);
@@ -65,15 +65,6 @@ namespace Eppendorf_CRUD.Pages
             return RedirectToPage("/Index");
         }
 
-        public string GetHealthName(int id)
-        {
-            return HealthStates.Find(t => t.Id == id)?.Status;
-        }
-
-        public string GetTypeName(int id)
-        {
-            return DeviceTypes.Find(t => t.Id == id)?.Name;
-        }
 
     }
 }

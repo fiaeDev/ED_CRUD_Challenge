@@ -28,6 +28,13 @@ namespace Data.Helper
             if (!types.Any())
                 return;
 
+            var existingTypes = await _typeRepo.GetAllDeviceTypes();
+            if(existingTypes.Any())
+            {
+                var existingNames = existingTypes.Select(d => d.Name).Distinct();
+                types = types.Except(existingNames);
+            }           
+
             List<DeviceType> typesList = new List<DeviceType>();
 
             foreach (var type in types)
@@ -52,6 +59,14 @@ namespace Data.Helper
             var healthStates = dataList.Select(d => d.device_health).Distinct();
             if (!healthStates.Any())
                 return;
+
+            var existingHealths = await _healthRepo.GetAllHealtStatesAsync();
+            if(existingHealths.Any())
+            {
+                var existingHealthsStates = existingHealths.Select(d => d.Status).Distinct();
+                healthStates = healthStates.Except(existingHealthsStates);
+            }          
+          
             List<DeviceHealth> healthStatesList = new List<DeviceHealth>();
             foreach (var deviceHealth in healthStates)
             {
