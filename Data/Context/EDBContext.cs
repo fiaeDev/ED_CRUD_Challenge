@@ -22,7 +22,6 @@ namespace Data.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Filename=../Data/DB/EDB.db");
-            //optionsBuilder.UseSqlite() "Filename=EDB.db");
         }
 
         public DbSet<Device> Devices { get; set; }
@@ -31,17 +30,8 @@ namespace Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(EDBContext).Assembly);
-            
            
-            modelBuilder.Entity<Device>(entity =>
-            {
-                //entity.HasKey(s => new { s.TypeId, s.HealthId });
-                //entity.Property(p => p.Type)
-                //    .IsRequired();
-                //entity.Property(p => p.Health)
-                //    .IsRequired();             
-            });
+            modelBuilder.Entity<Device>();
 
             modelBuilder.Entity<DeviceType>();
 
